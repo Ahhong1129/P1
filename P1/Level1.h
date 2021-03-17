@@ -1,15 +1,18 @@
 #pragma once
 #include "GameState.h"
 #include "GGraphic.h"
+#include<d3d9.h>
+#include<d3dx9.h>
 class Level1 : public GameState
 {
 private:
+	D3DXVECTOR3 vPosition;
 	LPDIRECT3DTEXTURE9 texture;
 	LPDIRECT3DTEXTURE9 texture_car;
 	LPD3DXSPRITE sprite;
 	D3DXMATRIX mat;
-	RECT spriteRect;
-	RECT spriteRect1;
+	RECT background_spriteRect;
+	RECT car_spriteRect;
 	/*RECT spriteRect_car;*/
 	///RECT textRect;
 	//LPD3DXFONT font;

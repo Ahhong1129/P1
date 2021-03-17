@@ -1,6 +1,6 @@
 #include "GInput.h"
 #include "GameWindows.h"
-
+#include <dinput.h>
 GInput* GInput::sInstance = NULL;
 
 GInput* GInput::getInstance() {

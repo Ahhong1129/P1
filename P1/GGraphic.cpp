@@ -1,6 +1,7 @@
 #include "GGraphic.h"
 #include"GameWindows.h"
 #include<d3d9.h>
+#include<d3dx9.h>
 
 GGraphic* GGraphic::sInstance = NULL;
 
@@ -34,7 +35,7 @@ GGraphic::GGraphic()
 	d3dPP.BackBufferFormat = D3DFMT_X8R8G8B8;
 	d3dPP.BackBufferCount = 1;
 	d3dPP.BackBufferWidth = 400;
-	d3dPP.BackBufferHeight = 900;
+	d3dPP.BackBufferHeight = 700;
 	d3dPP.hDeviceWindow = GameWindows::getInstance()->g_hWnd;
 
 
