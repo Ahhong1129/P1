@@ -1,5 +1,6 @@
 #pragma once
 #include"GameState.h"
+#include"GTimer.h"
 #include <vector>
 class GameStateManager
 {
@@ -9,6 +10,8 @@ private:
 	static GameStateManager* sInstance;
 	std::vector<GameState*>gameStateList;
 	GameState* currentGameState;
+
+	GTimer* gTimer = NULL;
 public:
 	enum GAMESTATENAME {
 		LEVEL_1,

@@ -13,20 +13,20 @@ private:
 	D3DXMATRIX mat;
 	RECT background_spriteRect;
 	RECT car_spriteRect;
-	/*RECT spriteRect_car;*/
 	///RECT textRect;
-	//LPD3DXFONT font;
 	D3DXVECTOR2 spriteCentre;
-	D3DXVECTOR2 trans;
+	D3DXVECTOR2 position;
 	D3DXVECTOR2 scaling;
 	float rotation = 0;
 	int x = 0;
-
+	int y = 0;
+	int speed = 2;
 public: 
 	Level1();
 	~Level1(); 
 	void init();
 	void update();
+	void fixedUpdate();
 	void draw();
 	void release();
 	

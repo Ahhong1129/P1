@@ -8,6 +8,7 @@ private:
 	~Car();
 	static Car* sInstance;
 public:
+	D3DXVECTOR2 direction;
 	D3DXVECTOR3 mainCar_position;
 	static Car* getInstance();
 	static void releaseInstance();

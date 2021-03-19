@@ -25,27 +25,7 @@ int main()
 
 		gameStateManager->update();
 
-		if (gInput->isKeyDown(DIK_UP))
-		{
-			printf("UP\n");
-			Car::getInstance()->mainCar_position.y++;
-		}
-
-		if (gInput->isKeyDown(DIK_DOWN))
-		{
-			printf("DOWN\n");
-			Car::getInstance()->mainCar_position.y--;
-		}
-
-		if (gInput->isKeyDown(DIK_LEFT)) {//left
-			printf("LEFT\n");
-			Car::getInstance()->mainCar_position.x++;
-		}
-
-		if (gInput->isKeyDown(DIK_RIGHT)) {//right
-			printf("RIGHT\n");
-			Car::getInstance()->mainCar_position.x--;
-		}
+		
 		//if (gWin->keyPressed == 70 && d3dPP.Windowed == true)
 		//{
 			//d3dPP.Windowed = false;

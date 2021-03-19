@@ -20,6 +20,11 @@ void Level2::update()
 	}
 }
 
+void Level2::fixedUpdate()
+{
+
+}
+
 void Level2::draw()
 {
 }
