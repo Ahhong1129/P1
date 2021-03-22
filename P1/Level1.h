@@ -7,20 +7,23 @@ class Level1 : public GameState
 {
 private:
 	D3DXVECTOR3 vPosition;
-	LPDIRECT3DTEXTURE9 texture;
+	LPDIRECT3DTEXTURE9 background_texture;
 	LPDIRECT3DTEXTURE9 texture_car;
 	LPD3DXSPRITE sprite;
 	D3DXMATRIX mat;
-	RECT background_spriteRect;
 	RECT car_spriteRect;
-	///RECT textRect;
-	D3DXVECTOR2 spriteCentre;
-	D3DXVECTOR2 position;
+	D3DXVECTOR2 background_position;
+	D3DXVECTOR2 mainCar_position;
 	D3DXVECTOR2 scaling;
-	float rotation = 0;
-	int x = 0;
-	int y = 0;
-	int speed = 2;
+	D3DXVECTOR2 direction;
+	D3DXVECTOR2 mainCarSize;
+	int boostSpeed = 0;
+	int mainCarCurrentFrame;
+	float animationRate;
+	float animationTimer;
+	int animationRow;
+	bool isMainCarMoving;
+	float speed;
 public: 
 	Level1();
 	~Level1(); 

@@ -17,7 +17,6 @@ int main()
 	GGraphic* gGraphic = GGraphic::getInstance();
 	GInput* gInput = GInput::getInstance();
 	GameStateManager* gameStateManager = GameStateManager::getInstance();
-	Car* car = Car::getInstance();
 
 	while (gWin->isWindowsRunning())
 	{
@@ -45,7 +44,6 @@ int main()
 	gWin->releaseInstance();
 	gGraphic->releaseInstance();
 	gInput->releaseInstance();
-	car->releaseInstance();
 	
 
 	return 0;
