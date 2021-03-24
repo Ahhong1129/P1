@@ -34,7 +34,7 @@ GGraphic::GGraphic()
 	d3dPP.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	d3dPP.BackBufferFormat = D3DFMT_X8R8G8B8;
 	d3dPP.BackBufferCount = 1;
-	d3dPP.BackBufferWidth = 400;
+	d3dPP.BackBufferWidth = 430;
 	d3dPP.BackBufferHeight = 600;
 	d3dPP.hDeviceWindow = GameWindows::getInstance()->g_hWnd;
 
