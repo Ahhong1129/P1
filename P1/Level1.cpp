@@ -37,6 +37,8 @@ void Level1::init()
 
 	mainCarSize.x = 100;
 	mainCarSize.y = 150;
+	
+	#HELLO
 
 	mainCarCurrentFrame = 0;
 	car_spriteRect.top = 6;
