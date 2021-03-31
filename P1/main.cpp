@@ -3,7 +3,7 @@
 #include "GInput.h"
 #include"GameStateManager.h"
 #include <dinput.h>
-#include "car.h"
+#include "physic.h"
 
 //	use int main if you want to have a console to print out message
 int main()
@@ -18,13 +18,13 @@ int main()
 	GInput* gInput = GInput::getInstance();
 	GameStateManager* gameStateManager = GameStateManager::getInstance();
 
+
 	while (gWin->isWindowsRunning())
 	{
 		gInput->update();
 
 		gameStateManager->update();
 
-		
 		//if (gWin->keyPressed == 70 && d3dPP.Windowed == true)
 		//{
 			//d3dPP.Windowed = false;

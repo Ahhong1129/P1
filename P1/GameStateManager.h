@@ -14,7 +14,9 @@ private:
 	GTimer* gTimer = NULL;
 public:
 	enum GAMESTATENAME {
+		MENU,
 		LEVEL_1,
+		GAMEOVER,
 		LEVEL_2
 	};
 

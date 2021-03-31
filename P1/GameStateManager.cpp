@@ -1,6 +1,8 @@
 #include "GameStateManager.h"
+#include "Menu.h"
 #include "Level1.h"
 #include"Level2.h"
+#include"GameOver.h"
 GameStateManager* GameStateManager::sInstance = 0;
 
 GameStateManager* GameStateManager::getInstance() {
@@ -19,18 +21,25 @@ void GameStateManager::releaseInstance() {
 
 GameStateManager::GameStateManager()
 {
+	Menu* menu = new Menu();
+	menu->init();
 
 	Level1* level1 = new Level1();
 	level1->init();
 
+	GameOver* gameOver = new GameOver();
+	gameOver->init();
+
 	Level2* level2 = new Level2();
 	level2->init();
 
+	gameStateList.push_back(menu);
 	gameStateList.push_back(level1);
+	gameStateList.push_back(gameOver);
 	gameStateList.push_back(level2);
 
 	//Default
-	currentGameState = level1;
+	currentGameState = menu;
 
 	gTimer = new GTimer();
 	gTimer->init(60);

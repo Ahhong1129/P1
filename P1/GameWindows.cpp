@@ -19,7 +19,6 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 			PostQuitMessage(0);
 		}
 		GameWindows::keyPressed = wParam;
-		printf("%d - %d\n", wParam, lParam);
 		break;
 
 	case WM_KEYUP:
@@ -49,8 +48,6 @@ GameWindows::~GameWindows()
 {
 
 }
-
-
 GameWindows* GameWindows::sInstance = NULL;
 
 GameWindows* GameWindows::getInstance()
@@ -95,7 +92,7 @@ void GameWindows::init(){
 
 	
 	//	You are to refer to MSDN for each of the parameters details.
-	g_hWnd = CreateWindowEx(0, wndClass.lpszClassName, "My Window's Name", WS_OVERLAPPEDWINDOW, 0, 100, 430,600, NULL, NULL, hInstance, NULL);
+	g_hWnd = CreateWindowEx(0, wndClass.lpszClassName, "Speedster", WS_OVERLAPPEDWINDOW, 0, 100, 430, 600, NULL, NULL, hInstance, NULL);
 
 
 	ShowWindow(g_hWnd, 1);

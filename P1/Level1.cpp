@@ -1,11 +1,13 @@
 #include "Level1.h"
 #include"GInput.h"
+#include"physic.h"
 #include <string>
+#include<iostream>
 #include "GameStateManager.h"
 #include<d3d9.h>
 #include<d3dx9.h>
 
-
+using namespace std;
 
 Level1::Level1()
 {
@@ -33,28 +35,48 @@ void Level1::init()
 		D3DX_DEFAULT, D3DX_DEFAULT, D3DCOLOR_XRGB(255, 255, 255),
 		NULL, NULL, &texture_rock);
 
+	D3DXCreateFont(GGraphic::getInstance()->d3dDevice, 25, 0, 0, 1, false,
+		DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, DEFAULT_QUALITY,
+		DEFAULT_PITCH | FF_DONTCARE, "Arial", &time_font);
 
-	vPosition = { 0,-7640,0 };
+	rockSize.x = 40;
+	rockSize.y = 48;
 
 	rock_rect.top = 0;
 	rock_rect.left = 0;
-	rock_rect.bottom = 32;
-	rock_rect.right = 32;
-
-	rock_position.x = 150;
-	rock_position.y = -500;
+	rock_rect.bottom = rock_rect.top + rockSize.y;
+	rock_rect.right = rock_rect.bottom + rockSize.x;
 	
+	timeRect.left = 0;
+	timeRect.top = 0;
+	timeRect.right = 100;
+	timeRect.bottom = 100;
+
+	rock_position[0].x = 250;
+	rock_position[0].y = 100;
+
+	rock_position[1].x = 150;
+	rock_position[1].y = -200;
+
+	rock_position[2].x = 250;
+	rock_position[2].y = -600;
+
+	rock_position[3].x = 150;
+	rock_position[3].y = -1000;
+
+	rock_position[4].x = 250;
+	rock_position[4].y = -3000;
+
 	//width = 400/ 4 = 100
 	//Height = 450 / 3 = 150
 
 	mainCarSize.x = 100;
 	mainCarSize.y = 150;
-	
-	#HELLO
 
 	mainCarCurrentFrame = 0;
-	car_spriteRect.top = 6;
-	car_spriteRect.left = 12;
+
+	car_spriteRect.top = 0;
+	car_spriteRect.left = 0;
 	car_spriteRect.bottom = car_spriteRect.top + mainCarSize.y;
 	car_spriteRect.right = car_spriteRect.left + mainCarSize.x;
 
@@ -66,15 +88,22 @@ void Level1::init()
 	scaling.y = 0.8f;
 
 	mainCar_position.x = 141;
-	mainCar_position.y = 450;
+	mainCar_position.y = 300;
 
-	background_position.x = 0;
-	background_position.y = 0;
+	background_position[0].x = 0;
+	background_position[0].y = -1024 + 600;
+
+	background_position[1].x = 0;
+	background_position[1].y = -1024 + 600 - 1024;
 
 	isMainCarMoving = false;
 	speed = (1.0f / animationRate) * 100;
 	direction.x = 0;
 	direction.y = 1;
+
+	countDownTimer = 10;
+
+	bgLength = 15000;
 }
 
 void Level1::update()
@@ -86,6 +115,7 @@ void Level1::update()
 	if (GInput::getInstance()->isKeyDown(DIK_UP))
 	{
 		printf("UP\n");
+		startCount = true;
 		animationRow = 0;
 		isMainCarMoving = true;
 		direction.x = 0;
@@ -117,12 +147,20 @@ void Level1::update()
 
 void Level1::fixedUpdate() 
 {
-	if (checkCollision(mainCar_position, car_spriteRect, rock_position, rock_rect)) {
-		/*isMainCarMoving = false;*/
-		D3DXVECTOR2 velocity = direction * (speed / 60.0f);
-		mainCar_position -= velocity;
-		velocity = -velocity;
+	for (int i = 0; i < 5; i++) 
+	{
+		if (Physic::getInstance()->checkRockCollision(mainCar_position, car_spriteRect, rock_position[i], rock_rect)) {
+			/*isMainCarMoving = false;*/
+			D3DXVECTOR2 velocity = direction * (speed / 60.0f);
+			mainCar_position -= velocity;
+			velocity = -velocity;
+		}
 	}
+
+	if (startCount) {
+		countDownTimer -= (1 / 60.0);
+	}
+	
 
 	if (isMainCarMoving) {
 		animationTimer += 1 / 60.0f;
@@ -147,27 +185,45 @@ void Level1::fixedUpdate()
 
 void Level1::draw()
 {
-	D3DXVECTOR2 tempPosition = background_position;
-	tempPosition.y /= 20;
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
-	tempPosition.y = 300 - mainCar_position.y;
-	tempPosition.y = max(max(0, tempPosition.y), -16084);
-	D3DXVECTOR2 carOnScreen = mainCar_position + tempPosition;
+	float backPos = (600 / 2) - mainCar_position.y;
+	backPos = min(max(backPos, 300 - 150), bgLength);
 
-	D3DXVECTOR2 rockOnScreen = rock_position + tempPosition;
+	for (int i = 0; i < 2; i++) {
+		D3DXVECTOR2 temp = background_position[i];
+		temp.y += (backPos - 300 + 36);
 
-	D3DXMatrixTransformation2D(&mat, NULL, 0.0, NULL, NULL, NULL, &tempPosition);
-	sprite->SetTransform(&mat);
-	sprite->Draw(background_texture, NULL, NULL,&vPosition, D3DCOLOR_XRGB(255, 255, 255));
+		if (temp.y >= 600) {
+			background_position[i].y -= 2048;
+		}
+		D3DXMatrixTransformation2D(&mat, NULL, 0.0, NULL, NULL, NULL, &temp);
+		sprite->SetTransform(&mat);
+		sprite->Draw(background_texture, NULL, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
+	}
+	D3DXVECTOR2 carOnScreen = mainCar_position;
+	carOnScreen.y = (mainCar_position.y) + backPos;
 
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, NULL, NULL, NULL, &carOnScreen);
 	sprite->SetTransform(&mat);
 	sprite->Draw(texture_car, &car_spriteRect,NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
 
-	D3DXMatrixTransformation2D(&mat, NULL, 0.0, NULL, NULL, NULL, &rockOnScreen);
+	D3DXMatrixTransformation2D(&mat, NULL, 0.0, NULL, NULL, NULL, NULL);
 	sprite->SetTransform(&mat);
-	sprite->Draw(texture_rock, &rock_rect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
+	string timeStr = "Time Remaining: " + to_string(countDownTimer);
 
+	if (countDownTimer > 0) {
+		time_font->DrawText(sprite, timeStr.c_str(), -1, &timeRect, DT_NOCLIP, D3DCOLOR_XRGB(0, 0, 0));
+	}
+	
+
+	for (int i = 0; i < 5; i++) {
+		D3DXVECTOR2 rockOnScreen = rock_position[i];
+		rockOnScreen.y = (rock_position[i].y) + backPos;
+		D3DXMatrixTransformation2D(&mat, NULL, 0.0, NULL, NULL, NULL, &rockOnScreen);
+		sprite->SetTransform(&mat);
+		sprite->Draw(texture_rock, &rock_rect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
+	}
+	
 	sprite->End();
 }
 void Level1::release()
@@ -183,26 +239,4 @@ void Level1::release()
 
 	texture_rock->Release();
 	texture_rock = NULL;
-}
-
-bool Level1::checkCollision(D3DXVECTOR2 pos1, RECT rect1, D3DXVECTOR2 pos2, RECT rect2)
-{
-	rect1.right = pos1.x + rect1.right - rect1.left;
-	rect1.left = pos1.x;
-	rect1.bottom = pos1.y + rect1.bottom - rect1.top;
-	rect1.top = pos1.y;
-
-	rect2.right = pos2.x + rect2.right - rect2.left;
-	rect2.left = pos2.x;
-	rect2.bottom = pos2.y + rect2.bottom - rect2.top;
-	rect2.top = pos2.y;
-
-
-	if (rect1.bottom < rect2.top) return false;
-	if (rect1.top > rect2.bottom) return false;
-	if (rect1.right < rect2.left) return false;
-	if (rect1.left > rect2.right) return false;
-
-	printf("Collide\n");
-	return true;
 }
