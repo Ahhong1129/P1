@@ -33,7 +33,7 @@ void Menu::init()
 void Menu::update()
 {
 	if (GInput::getInstance()->isKeyDown(DIK_SPACE)) {
-		GameStateManager::getInstance()->changeGameState(GameStateManager::LEVEL_1);
+		GameStateManager::getInstance()->changeGameState(GameStateManager::USERGUIDE);
 	}
 
 }

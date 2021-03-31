@@ -16,8 +16,10 @@ public:
 	enum GAMESTATENAME {
 		MENU,
 		LEVEL_1,
+		LEVEL_2,
 		GAMEOVER,
-		LEVEL_2
+		USERGUIDE,
+		YOUWIN
 	};
 
 	static GameStateManager* getInstance();

@@ -3,6 +3,8 @@
 #include "Level1.h"
 #include"Level2.h"
 #include"GameOver.h"
+#include"UserGuide.h"
+#include"WinCondition.h"
 GameStateManager* GameStateManager::sInstance = 0;
 
 GameStateManager* GameStateManager::getInstance() {
@@ -27,16 +29,24 @@ GameStateManager::GameStateManager()
 	Level1* level1 = new Level1();
 	level1->init();
 
-	GameOver* gameOver = new GameOver();
-	gameOver->init();
-
 	Level2* level2 = new Level2();
 	level2->init();
 
+	GameOver* gameOver = new GameOver();
+	gameOver->init();
+
+	UserGuide* userGuide = new UserGuide();
+	userGuide->init();
+
+	WinCondition* win = new WinCondition();
+	win->init();
+
 	gameStateList.push_back(menu);
 	gameStateList.push_back(level1);
-	gameStateList.push_back(gameOver);
 	gameStateList.push_back(level2);
+	gameStateList.push_back(gameOver);
+	gameStateList.push_back(userGuide);
+	gameStateList.push_back(win);
 
 	//Default
 	currentGameState = menu;

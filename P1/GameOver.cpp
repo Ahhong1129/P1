@@ -36,8 +36,9 @@ void GameOver::init()
 void GameOver::update()
 {
 	if (GInput::getInstance()->isKeyDown(DIK_B)) {
-		GameStateManager::getInstance()->changeGameState(GameStateManager::LEVEL_1);
+		GameStateManager::getInstance()->changeGameState(GameStateManager::USERGUIDE);
 	}
+
 }
 
 void GameOver::fixedUpdate()

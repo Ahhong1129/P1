@@ -158,6 +158,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="physic.cpp" />
+    <ClCompile Include="UserGuide.cpp" />
+    <ClCompile Include="WinCondition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h" />
@@ -174,6 +176,8 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="physic.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="UserGuide.h" />
+    <ClInclude Include="WinCondition.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="P1.rc" />
